@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deadline Panic Simulator</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        section {
+            height: 100vh;
+            padding-top: 80px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        .progress-container {
+            width: 80%;
+            height: 25px;
+            background-color: #ddd;
+            margin: 20px auto;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: green;
+            text-align: center;
+            color: white;
+        }
+
+        .calm { background-color: lightblue; }
+        .medium { background-color: lightyellow; }
+        .panic { background-color: lightcoral; color: white; }
+        .extreme { background-color: black; color: red; }
+    </style>
+</head>
+
+<body class="calm">
+
+    <h1>Deadline Panic Simulator</h1>
+
+    <div>
+        <input type="text" id="assignment" placeholder="Enter Assignment Name">
+        <input type="number" id="time" placeholder="Hours Left">
+        <br>
+        <button onclick="checkPanic()">Check Panic Level</button>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar">0%</div>
+    </div>
+
+    <section>
+        <h2 id="title">Enter details above</h2>
+        <p id="message"></p>
+    </section>
+
+    <script>
+        function checkPanic() {
+            var assignment = document.getElementById("assignment").value;
+            var time = document.getElementById("time").value;
+
+            var title = document.getElementById("title");
+            var message = document.getElementById("message");
+            var body = document.body;
+            var bar = document.getElementById("progressBar");
+
+            var progress = 0;
+
+            if (time > 24) {
+                body.className = "calm";
+                title.innerHTML = "Plenty of Time 😌";
+                message.innerHTML = assignment + " can be done later.";
+                progress = 20;
+            }
+            else if (time > 10) {
+                body.className = "medium";
+                title.innerHTML = "Still Chill 😬";
+                message.innerHTML = "You should start " + assignment;
+                progress = 50;
+            }
+            else if (time > 3) {
+                body.className = "panic";
+                title.innerHTML = "Deadline Soon 😨";
+                message.innerHTML = "Hurry up! Finish " + assignment;
+                progress = 80;
+            }
+            else {
+                body.className = "extreme";
+                title.innerHTML = "PANIC MODE 😱";
+                message.innerHTML = assignment + " is due VERY SOON!!!";
+                progress = 100;
+            }
+
+            bar.style.width = progress + "%";
+            bar.innerHTML = progress + "%";
+        }
+    </script>
+
+</body>
+</html>
